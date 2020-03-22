@@ -2,7 +2,8 @@ import React, { useState }  from 'react';
 
 import api from '../../services/api';
 
-export default function Login() {
+export default function Login({ history }) {
+
     const [email, setEmail] = useState('')
 
     async function handleSubmit(event) {
@@ -12,12 +13,15 @@ export default function Login() {
         try {
             response = await api.post('/sessions', { email })
             const { _id } = response.data;
-            localStorage.setItem('user', _id)
+            localStorage.setItem('user', _id) // aba application no console do navegador
+
         } catch(error) {
             console.log('Erro ao iniciar sessão',error)
         } finally {
-            console.log('Resposta', response)
+            console.log('Resposta no Login', response)
         }      
+        if (response) history.push('/dashboard')
+
    }
     return (
         <>
