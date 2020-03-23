@@ -3,8 +3,12 @@ const routes   = require('./routes');
 const mongoose = require('mongoose');
 const cors     = require('cors');
 const path     = require('path');
+const socketio = require('socket.io');
+const http     = require('http') ;
 
-const app = express();
+const app    = express();
+const server = http.server(app);
+const io     = socketio(server);
 
 mongoose.connect('mongodb+srv://omnistack:omnistack@icfn-mpexq.mongodb.net/omnistack9?retryWrites=true&w=majority',{
     useNewUrlParser: true,
@@ -20,6 +24,4 @@ app.use(express.json());
 app.use('/files', express.static(path.resolve(__dirname, '..', 'uploads')));
 app.use(routes);
 
-
-
-app.listen(3333);
+server.listen(3333);
